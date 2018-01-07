@@ -1,7 +1,7 @@
 dist: trusty
 
 script:
-  - docker build -t navicore/naviron-other .
+  - travis_wait 30 docker build -t navicore/naviron-other .
 
 sudo: required
 
@@ -13,6 +13,6 @@ after_success:
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
     docker push navicore/naviron-other;
     docker tag "navicore/naviron-other" "navicore/naviron-other:0.1.$TRAVIS_BUILD_NUMBER";
-    docker push "navicore/naviron-other:0.1.$TRAVIS_BUILD_NUMBER";
+    travis_wait 30 docker push "navicore/naviron-other:0.1.$TRAVIS_BUILD_NUMBER";
     fi
 
