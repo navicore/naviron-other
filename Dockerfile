@@ -103,3 +103,5 @@ RUN curl -R -O http://www.lua.org/ftp/lua-5.3.4.tar.gz && tar zxf lua-5.3.4.tar.
 
 RUN curl https://bintray.com/sbt/rpm/rpm | tee /etc/yum.repos.d/bintray-sbt-rpm.repo && yum install -y sbt
 
+RUN wget https://github.com/cisco/ChezScheme/archive/v9.5.tar.gz && tar zxf v9.5.tar.gz && cd ChezScheme-9.5 && ./configure && make install
+
