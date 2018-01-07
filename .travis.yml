@@ -1,17 +1,16 @@
-sudo: true
-dist: trusty
-
 script:
   - docker build -t navicore/naviron-other .
 
 services:
   - docker
 
+sudo: required
+
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
-    docker push navicore/naviron-other;
+    docker push "navicore/naviron-other";
     docker tag "navicore/naviron-other" "navicore/naviron-other:0.1.$TRAVIS_BUILD_NUMBER";
-    travis_wait 30 docker push "navicore/naviron-other:0.1.$TRAVIS_BUILD_NUMBER";
+    docker push "navicore/naviron-other:0.1.$TRAVIS_BUILD_NUMBER";
     fi
 
