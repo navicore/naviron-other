@@ -82,21 +82,8 @@ ENV CMAKE_ROOT /usr/local/share/cmake-$CMAKE_VER_MAJ
 # Improve link to shared libraries
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/usr/lib64/R/lib:/usr/local/lib:/lib:/usr/lib/jvm/jre/lib/amd64/server:/usr/lib/jvm/jre/lib/amd64:/usr/lib/jvm/java/lib/amd64:/usr/java/packages/lib/amd64:/lib:/usr/lib:/usr/local/lib
 
-# Gambit-C node and lua
-RUN git clone https://github.com/gambit/gambit.git \
-  && cd gambit \
-  && ./configure \
-  && make -j"$(nproc --all)" current-gsc-boot \
-  && ./configure --enable-single-host --enable-c-opt --enable-gcc-opts \
-  && make -j"$(nproc --all)" from-scratch \
-  && make check \
-  && make install \
-  && ln -s /usr/local/Gambit/bin/gsc /usr/local/bin/gsc \
-  && ln -s /usr/local/Gambit/bin/gsi /usr/local/bin/gsi \
-  && ln -s /usr/local/Gambit/bin/gambcomp-C /usr/local/bin/gambcomp-C \
-  && ln -s /usr/local/Gambit/bin/gambdoc /usr/local/bin/gambdoc \
-  && cd .. && rm -rf gambit \
-  && curl --silent --location https://rpm.nodesource.com/setup_8.x | bash - && yum install -y nodejs \
+# node and lua
+RUN curl --silent --location https://rpm.nodesource.com/setup_8.x | bash - && yum install -y nodejs \
   && curl -R -O http://www.lua.org/ftp/lua-5.3.4.tar.gz && tar zxf lua-5.3.4.tar.gz && cd lua-5.3.4 && make linux install && cd .. && rm -rf lua* \
   && curl https://bintray.com/sbt/rpm/rpm | tee /etc/yum.repos.d/bintray-sbt-rpm.repo && yum install -y sbt
 
